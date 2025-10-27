@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
     const date = new Date()
     date.setDate(date.getDate() - (6 - i))
     const dateStr = date.toISOString().split("T")[0]
-    const count = threats.filter((t) => t.created_at.startsWith(dateStr)).length
+    const count = threats.filter((t) => t.created_at && t.created_at.startsWith(dateStr)).length
     return {
       date: date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
       threats: count,

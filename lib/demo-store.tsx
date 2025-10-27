@@ -86,6 +86,7 @@ const INITIAL_DATA: DemoData = {
 
 export function DemoStoreProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<DemoData>(INITIAL_DATA)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const userId = localStorage.getItem("chainsentry-user-id")
@@ -103,14 +104,17 @@ export function DemoStoreProvider({ children }: { children: ReactNode }) {
         setData(INITIAL_DATA)
       }
     }
+    setIsLoaded(true)
   }, [])
 
   useEffect(() => {
+    if (!isLoaded) return // Don't save until initial load is complete
+
     const userId = localStorage.getItem("chainsentry-user-id")
     if (userId) {
       localStorage.setItem(`chainsentry-demo-data-${userId}`, JSON.stringify(data))
     }
-  }, [data])
+  }, [data, isLoaded])
 
   const addThreat = (threat: Threat) => {
     setData((prev) => ({ ...prev, threats: [threat, ...prev.threats] }))

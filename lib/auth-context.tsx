@@ -26,7 +26,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Check if user is logged in
     const storedUser = localStorage.getItem("chainsentry_user")
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      const userData = JSON.parse(storedUser)
+      setUser(userData)
+      localStorage.setItem("chainsentry-user-id", userData.id)
     }
   }, [])
 
@@ -53,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Log in the user
     setUser(newUser)
     localStorage.setItem("chainsentry_user", JSON.stringify(newUser))
+    localStorage.setItem("chainsentry-user-id", newUser.id)
 
     return true
   }
@@ -68,15 +71,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { password: _, ...userWithoutPassword } = user
     setUser(userWithoutPassword)
     localStorage.setItem("chainsentry_user", JSON.stringify(userWithoutPassword))
+    localStorage.setItem("chainsentry-user-id", userWithoutPassword.id)
 
     return true
   }
 
   const logout = () => {
+    const userId = localStorage.getItem("chainsentry-user-id")
+
     setUser(null)
     localStorage.removeItem("chainsentry_user")
-    // Clear user's demo data
-    localStorage.removeItem("chainsentry_demo_data")
+    localStorage.removeItem("chainsentry-user-id")
+
+    if (userId) {
+      localStorage.removeItem(`chainsentry-demo-data-${userId}`)
+    }
   }
 
   return (
