@@ -6,7 +6,7 @@
 
 ChainSentry is an enterprise-grade blockchain security platform that provides comprehensive Web3 security monitoring, threat detection, and incident response capabilities. Built with Next.js 15 and powered by AI-driven analysis, it offers real-time protection for blockchain users and organizations.
 
-**Live Demo**: [Coming Soon]
+**Live Demo**: (https://chainsentry-iota.vercel.app/)
 
 ## ✨ Key Features
 
